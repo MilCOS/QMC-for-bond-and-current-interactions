@@ -1,0 +1,23 @@
+row 4
+col 4
+# lattice
+n 2
+ns 4
+mu 0.0
+doping 0.0
+tnn 1.0
+tryflux 0.0000001
+# singlet bond interaction
+gsbd 2.0
+# triplet current interaction
+gtcur 2.0
+# Monte Carlo basic
+warmstep 100
+measurestep 100
+seed 72880
+# QMC basic
+beta 20
+interval 400
+p0 10
+measure 4
+latticetype 2
