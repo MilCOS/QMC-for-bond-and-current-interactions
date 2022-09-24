@@ -1,4 +1,4 @@
-Code has been tested using Julia Versions 1.5.x, 1.6.x
+Code has been tested using Julia Versions 1.5.x, 1.6.x, 1.7.x
 
 ```julia
 # Required packages
