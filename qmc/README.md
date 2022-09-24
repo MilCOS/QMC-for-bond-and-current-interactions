@@ -13,6 +13,7 @@ using Dates
 
 # Structure
 """
+--- system.csv
 --- main.jl
     --- initialize.jl
         --- lattices.jl
