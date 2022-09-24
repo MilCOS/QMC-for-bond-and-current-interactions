@@ -22,3 +22,9 @@ using Dates
     --- measure.jl
     --- postprocess.jl
 """
+```
+
+To run the code
+```sh
+mpiexec -n 8 julia ./main.jl
+```
