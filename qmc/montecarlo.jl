@@ -197,7 +197,7 @@ function UpdateLocal!(
             end
         end
     end
-    greenfunc[:,:] = greenfunc[:,:] - dgfunc[:,:]
+    greenfunc[:,:] = greenfunc - dgfunc
 end
 
 
@@ -222,14 +222,14 @@ function WarpUpdateR2L!(
         # When scanning forwards, we must multiply 
         # exp(V1) to the left-hand side (for later MC update on V1), and exp(-V1) to the right-hand side.
         # GreenFunc = evg * GreenFunc * emvg. (B<V)B> -> B<(VB>)
-        greenfunc[:,:] = BLAS.gemm('N','N',evg,greenfunc[:,:])
-        greenfunc[:,:] = BLAS.gemm('N','N',greenfunc[:,:],emvg)
+        greenfunc[:,:] = BLAS.gemm('N','N',evg,greenfunc)
+        greenfunc[:,:] = BLAS.gemm('N','N',greenfunc,emvg)
     elseif direction == -1  # L2R
         # When scanning backwards, 
         # Before doing the MC update on V4, we must clear the kinetic part.
         # GreenFunc = eMK * GreenFunc * eK (given that time is not 1)  B<(KB>) -> (B<K)B>
         if groupid == nbgroup
-            greenfunc[:,:] = BLAS.gemm('N','N', BLAS.gemm('N','N',eMK,greenfunc[:,:]), eK)
+            greenfunc[:,:] = BLAS.gemm('N','N', BLAS.gemm('N','N',eMK,greenfunc), eK)
         end
     else
         println("Wrong Direction")
@@ -247,13 +247,13 @@ function WarpUpdateL2R!(
         # For the forward-update, however, after multiplying the fourth groupid, the kinetic part should be removed as well.
         # GreenFunc = eK * GreenFunc * eMK. (B<K)B> -> B<(KB>)
         if groupid == nbgroup
-            greenfunc[:,:] = BLAS.gemm('N','N', BLAS.gemm('N','N',eK,greenfunc[:,:]), eMK)
+            greenfunc[:,:] = BLAS.gemm('N','N', BLAS.gemm('N','N',eK,greenfunc), eMK)
         end
     elseif direction == -1
         # For the backward-update, after the MC update on V4, we must multiply exp(-V4) to the left-hand side (to clear the way for MC update on V3), and exp(V4) to the right-hand side.
         # GreenFunc = emvg * GreenFunc * evg. B<(VB>) -> (B<V)B>
-        greenfunc[:,:] = BLAS.gemm('N','N',emvg,greenfunc[:,:])
-        greenfunc[:,:] = BLAS.gemm('N','N',greenfunc[:,:],evg)
+        greenfunc[:,:] = BLAS.gemm('N','N',emvg,greenfunc)
+        greenfunc[:,:] = BLAS.gemm('N','N',greenfunc,evg)
     else
         println("Wrong Direction")
     end
