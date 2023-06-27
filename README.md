@@ -33,6 +33,7 @@ The lattice bonds of a square lattice are categorized into four groups, so that 
 ----
 
 [1]  H. Xu, C. Wu, and Y. Wang, Phys. Rev. B 106, 195137 (2022)
+
 [2]  C. Wu and S.-C. Zhang, Phys. Rev. B 71, 155115 (2005)
 
 ----
